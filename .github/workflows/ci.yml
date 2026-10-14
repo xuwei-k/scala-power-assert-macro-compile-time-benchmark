@@ -1,0 +1,40 @@
+on:
+  pull_request:
+  push:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - p1
+          - p2
+          - p3
+          - p4
+    steps:
+    - uses: actions/checkout@v7
+    - uses: actions/setup-java@v6
+      with:
+        java-version: 25
+        distribution: zulu
+    - uses: coursier/cache-action@v8
+    - uses: sbt/setup-sbt@v1
+    - run: sbt
+           -v
+           --server
+           -J-Xmx7G
+           -J-Xms7G
+           "project ${{ matrix.project }}"
+           "all update sources" compile clean
+           "all update sources" compile clean
+           "all update sources" compile clean
+           "all update sources" compile clean
+           "all update sources" compile clean
+           "all update sources" compile clean
+           "all update sources" compile clean
+           "all update sources" compile clean
+           "all update sources" compile clean
+           "all update sources" compile clean
+           "all update sources" compile
